@@ -12,22 +12,43 @@
 		<button id="btnPrev" type="button">Previous</button>
 		<button id="btnNext" type="button">Next</button>
 		<div id="divCal"></div>
-		
-	</div>
-	<div class="clock">
-		<div class="clock-wraper">
-		
-		
-		<div id="clock"></div><br>
-			<div class="watch">
-				<canvas height='480' width='480' id='myCanvas'></canvas>
-			</div>
-			
-			
-	
+</div>
+<div class="clock">
+	<div class="choise-block">
+		<label for="choise">Для установки минут щелкните на флажок</label>
+	<input type="checkbox" class="choise-minutes" id="choise">
+	<div class="am-pm-block">
+		<div class="am-pm-block__am">
+			<label for="am">до 12 дня</label>
+		<input type="checkbox" class="am" id="am">
+		</div>
+		<div class="am-pm-block__pm">
+			<input type="checkbox" class="pm" id="pm">
+			<label for="pm">после 12 дня</label>
 		</div>
 		
 	</div>
+	</div>
+	<div class="clock-wraper">
+		<span class="hour twelwe" data-time="12">12</span>
+		<span class="hour one" data-time="1">1</span>
+		<span class="hour two" data-time="2">2</span>
+		<span class="hour three" data-time="3">3</span>
+		<span class="hour four" data-time="4">4</span>
+		<span class="hour five" data-time="5">5</span>
+		<span class="hour six" data-time="6">6</span>
+		<span class="hour seven" data-time="7">7</span>
+		<span class="hour eight" data-time="8">8</span>
+		<span class="hour nine" data-time="9">9</span>
+		<span class="hour ten" data-time="10">10</span>
+		<span class="hour elewen" data-time="11">11</span>
+
+		<div class="arrow-hour"></div>
+		<div class="arrow-minute"></div>
+		
+
+	</div>
+</div>
 	<script src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,52 @@
 "use strict"
+const clock=document.querySelector('.clock');
+const hourData = clock.querySelectorAll('.hour');
+const hourArrow = clock.querySelector('.arrow-hour');
+const hourMinute = clock.querySelector('.arrow-minute');
+const check = clock.querySelector('#choise');
+const amCheck=clock.querySelector('#am');
+const pmCheck=clock.querySelector('#pm');
+const time = {
+	"hour": 12,
+	"minute": 0,
+	"dayTime":"am"
+};
+
+
+hourData.forEach((hour) => {
+	hour.addEventListener('click', (e) => {
+		let valHour = 0;
+		console.log(valHour);
+		valHour = e.target.getAttribute('data-time');
+		let angle = valHour * 30;
+		let minute = 0;
+		if (check.checked == true) {
+			hourMinute.style.transformOrigin = 'bottom';
+			hourMinute.style.transform = `rotateZ(${angle}deg)`;
+			minute = valHour * 5;
+		} else {
+			hourArrow.style.transformOrigin = 'bottom';
+			hourArrow.style.transform = `rotateZ(${angle}deg)`;
+		}
+		time.hour = valHour;
+		time.minute = minute;
+		if (pmCheck.checked == true) {
+			time.dayTime = 'pm';
+			amCheck.checked = false;
+				
+				
+		} else {
+			time.dayTime = 'am';
+			pmCheck.checked == false;
+		}
+
+		console.log(time);
+			
+	});
+});
+
+/*--------------------------------------- */
+
 const Cal = function(divId) {
 	//Сохраняем идентификатор div
 	this.divId = divId;
@@ -123,11 +171,14 @@ const Cal = function(divId) {
 	getId('btnPrev').onclick = function() {
 	  c.previousMonth();
 	 };
+	 const calendar = document.querySelector('.calendar-wraper');
 	 const daysAll = document.querySelectorAll('.day');
 	 const mothName=document.querySelector('.month-name')
 	 daysAll.forEach((day) => { 
 		 day.addEventListener('click', (e) => { 
 			 e.preventDefault();
+			 calendar.classList.add('clock-active');
+			 clock.classList.add('clock-active');
 			 console.log(day.innerHTML);
 			 console.log(mothName.innerHTML);
 			 
@@ -139,6 +190,10 @@ const Cal = function(divId) {
  function getId(id) {
 	return document.getElementById(id);
 }
+
+
+
+
 
 
 

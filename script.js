@@ -24,7 +24,7 @@ check.addEventListener('click', () => {
 	choiseMinutes(check, labelMinutes);
 });
 function choiseMinutes(checkBox, label) {
-	if(label.classList.contains('active'))
+	label.classList.toggle('active')
 	checkBox.checked = true;
 	label.innerText = "Для установки часов кликните на надпись ниже"
 	if(!labelMinutes.classList.contains('active')) {

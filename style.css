@@ -6,9 +6,14 @@
 	border-radius: 5px;
 	background: #fff;
 	position: relative;
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.5s ease 0.2s;
 }
 .calendar-wraper.clock-active{
-	display: none;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.5s ease 0.2s;
 }
 table {
 	clear: both;
@@ -86,8 +91,9 @@ table {
   font-weight: bold;
 }
  .clock {
-	
-display: none;
+	visibility: hidden;
+opacity: 0;
+transition: all 1s ease 0.5s;
 }
 .clock.clock-active{
 	position: absolute;
@@ -96,7 +102,9 @@ display: none;
 	align-items: center;
 	top: 0;
 	left: 41.5%;
-	display: block;
+	visibility: visible;
+opacity: 1;
+transition: all 1s ease 0.5s;
 }
 .clock-wraper {
 	position: relative;	       
@@ -191,6 +199,7 @@ display: none;
 	position: absolute;
 	top: 23%;
 	left: 48%;
+	
 }
  
 .arrow-minute {
@@ -201,16 +210,37 @@ display: none;
 	position: absolute;
 	top: 14%;
 	left: 48.5%;
+	
 }
 .choise-block>label{
 	font-size: 25px;
 	max-width: 300px;
 	display: block;
 	text-align: center;
+	position: relative;
+}
+.choise-block>label::after{
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	content: '';
+	background:url(img/check.png) center/100% no-repeat ;
+	display: block;
+	left: 45%;
+	margin:2px 0px 0px 0px;
+	transition: all 0.3s ease 0.3s;
+}
+.choise-block>label.active::after{
+	width: 200px;
+	left: 10%;
+	content: 'режим установки минут';
+	background:none ;
+	color: red;
 }
 .choise-block input{
 	width:30px;
 	height:30px;
+	opacity: 0;
 }
 .choise-block{
 	padding:20px;
@@ -228,4 +258,26 @@ display: none;
 }
 .am-pm-block label{
 	font-size: 27px;
+}
+.am,.pm{
+	opacity: 0;
+}
+.pm~label,.am-pm-block__am>label{
+	position: relative;
+}
+.pm~label:before,.am-pm-block__am>label::after{
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	content: '';
+	background:url(img/check.png) center/100% no-repeat ;
+	
+}
+.pm~label:before{
+	left: -35px;
+	top: 0px;
+}
+.am-pm-block__am>label::after{
+	right: -35px;
+	top: 0px;
 }

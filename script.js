@@ -1,20 +1,45 @@
 "use strict"
-const clock=document.querySelector('.clock');
+
+const clock = document.querySelector('.clock');
+const clockWraper = clock.querySelector('.clock-wraper');
 const hourData = clock.querySelectorAll('.hour');
 const hourArrow = clock.querySelector('.arrow-hour');
 const hourMinute = clock.querySelector('.arrow-minute');
 const check = clock.querySelector('#choise');
 const amCheck=clock.querySelector('#am');
-const pmCheck=clock.querySelector('#pm');
+const pmCheck = clock.querySelector('#pm');
+const labelPm = clock.querySelector('.pm~label');
+const labelAm = clock.querySelector('.am-pm-block__am>label');
+const labelMinutes = clock.querySelector('.choise-block>label');
 const time = {
-	"hour": 12,
+	"hour": 13,
 	"minute": 0,
 	"dayTime":"am"
 };
 
+console.log(labelMinutes);
 
+check.addEventListener('click', () => {
+		
+	choiseMinutes(check, labelMinutes);
+});
+function choiseMinutes(checkBox, label) {
+	if(label.classList.contains('active'))
+	checkBox.checked = true;
+	label.innerText = "Для установки часов кликните на надпись ниже"
+	if(!labelMinutes.classList.contains('active')) {
+		checkBox.checked = false;
+		label.innerText = "Для установки минут кликните на флажок"
+	 }
+ }
+
+
+
+hourArrow.style.transformOrigin = 'bottom';
+hourArrow.style.transform = `rotateZ(30deg)`;
 hourData.forEach((hour) => {
 	hour.addEventListener('click', (e) => {
+		
 		let valHour = 0;
 		console.log(valHour);
 		valHour = e.target.getAttribute('data-time');
@@ -24,6 +49,7 @@ hourData.forEach((hour) => {
 			hourMinute.style.transformOrigin = 'bottom';
 			hourMinute.style.transform = `rotateZ(${angle}deg)`;
 			minute = valHour * 5;
+			
 		} else {
 			hourArrow.style.transformOrigin = 'bottom';
 			hourArrow.style.transform = `rotateZ(${angle}deg)`;
@@ -39,12 +65,99 @@ hourData.forEach((hour) => {
 			time.dayTime = 'am';
 			pmCheck.checked == false;
 		}
-
+		
 		console.log(time);
 			
 	});
 });
+function moveArrow(param1, param2, elem,event) {
+	const x2 = event.clientX
+	const y2 = event.clientY
+		const angle =Math.floor ( 180*(( Math.atan2(y2 - param1,x2 - param2 ) )) / Math.PI );
+		elem.style.transformOrigin = '';
+		elem.style.transform = ``;
+		elem.style.transformOrigin = 'bottom';
+		elem.style.transform = `rotateZ(${angle}deg)`;
+ }
+//получение угла
+function getDegreeElementById(element){
+	    /* var element = document.getElementById(id_element); */
+	const style = window.getComputedStyle(element, null);
+	    // получаем значение стилей
+	const valueStyle = style.getPropertyValue("-webkit-transform") ||
+	        style.getPropertyValue("-moz-transform") ||
+	        style.getPropertyValue("-ms-transform") ||
+	        style.getPropertyValue("-o-transform") ||
+	        style.getPropertyValue("transform");
+	    // если стилей нет, то угол 0 градусов
+	    if(valueStyle == 'none') return 0;
+	    // разбираем полученное значение
+	    console.log(valueStyle);
+	    var values = valueStyle.split('(')[1];
+	    values = values.split(')')[0];
+	    values = values.split(',');
+	    // получаем синус и косинус
+	    var cos = values[0];
+	    var sin = values[1];
+	    // вычисляем угол
+	    var degree = Math.round(Math.asin(sin) * (180/Math.PI));
+	    if(cos<0){
+	     let   addDegree = 90 - Math.round(Math.asin(sin) * (180/Math.PI));
+	        degree = 90 + addDegree;
+	    }
+	    if(degree < 0){
+	        degree = 360 + degree;
+	    }
+	    return degree;
+	}
 
+
+
+
+
+
+
+hourArrow.addEventListener('mousedown', (e) => {
+	let x1, y1;
+	let m;
+	
+	hourArrow.classList.add('active');
+	if (hourArrow.classList.contains('active')) { 
+			x1 = e.clientX
+			y1 = e.clientY
+		clockWraper.addEventListener('mousemove',  m=(e)=> {
+			moveArrow(y1, x1, hourArrow, e);
+		 })
+	}
+	clockWraper.addEventListener('click', (e) => {
+		console.log();
+		clockWraper.removeEventListener('mousemove', m, false)
+		console.log(getDegreeElementById(hourArrow));
+		
+	})
+})
+
+
+
+hourMinute.addEventListener('mousedown', (e) => {
+	let x1, y1;
+	let m;
+	
+	hourMinute.classList.add('active');
+	if (hourMinute.classList.contains('active')) { 
+			x1 = e.clientX
+			y1 = e.clientY
+		clockWraper.addEventListener('mousemove',  m=(e)=> {
+			moveArrow(y1, x1, hourMinute, e);
+		 })
+	}
+	clockWraper.addEventListener('click', (e) => {
+		console.log();
+		clockWraper.removeEventListener('mousemove', m, false)
+		console.log(getDegreeElementById(hourMinute));
+		
+	})
+})
 /*--------------------------------------- */
 
 const Cal = function(divId) {
